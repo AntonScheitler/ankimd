@@ -1,0 +1,5 @@
+*.txt
+*.md
+build
+dist
+*.spec
