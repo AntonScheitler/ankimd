@@ -1,18 +1,14 @@
 import sys
 import os
 
-
-END_OF_FRONT = "!\\" # signals end of front of flashcard
-END_OF_BACK = "!\\\\" # signals end of back of flashcard
-
 def parse_special_chars(line: str) -> str:
     return line.replace("<", "&lt;").replace(">", "&gt;").replace("&", "&amp;")
 
-def parse_newline_front_back(line: str) -> str:
-    if line[:-1].endswith(END_OF_FRONT) or line[:-1].endswith(END_OF_BACK):
+def parse_newline_front_back(line: str, delimiter_front: str, delimiter_back: str) -> str:
+    if line[:-1].endswith(delimiter_front) or line[:-1].endswith(delimiter_back):
         line = line.replace("\n", "")
     line = line.replace("\n", "<br>")
-    line = line.replace(END_OF_BACK, "\n").replace(END_OF_FRONT, ";")
+    line = line.replace(delimiter_back, "\n").replace(delimiter_front, ";")
     return line
 
 
@@ -43,9 +39,10 @@ def parse_unorderd_list(line: str, in_list: bool) -> tuple[str, bool]:
             in_list = False
     return line, in_list
 
-def main():
-    md_path = sys.argv[1]
-    pure_path, extension = os.path.splitext(md_path)
+def parse(path="", delimiter_front="!\\", delimiter_back="!\\\\") -> str:
+    if not path:
+        path = sys.argv[1]
+    pure_path, extension = os.path.splitext(path)
     curr_flashcards = "" # the current parsed text
 
     in_list = False # is an unordered list currently being processed
@@ -54,13 +51,13 @@ def main():
         if extension != ".md":
             raise FileNotFoundError
 
-        with open(md_path, "r") as f:
+        with open(path, "r") as f:
             for line in f.readlines():
                 if line == "\n":
                     continue
 
                 line = parse_special_chars(line)
-                line = parse_newline_front_back(line)
+                line = parse_newline_front_back(line, delimiter_front, delimiter_back)
                 line = parse_block_math(line)
                 line = parse_inline_math(line)
                 line, in_list = parse_unorderd_list(line, in_list)
@@ -78,8 +75,10 @@ def main():
     except FileNotFoundError:
         print("file does not exist or does not have .md extension")
 
+    return pure_path + ".txt"
+
 
 
 if __name__ == "__main__":
-    main()
+    parse()
 
