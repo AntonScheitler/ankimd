@@ -18,7 +18,7 @@ def testFunction() -> None:
 
 
 # create a new menu item, "test"
-action = QAction("test", mw)
+action = QAction("Import Markdown", mw)
 # set it to call testFunction when it's clicked
 qconnect(action.triggered, testFunction)
 # and add it to the tools menu
