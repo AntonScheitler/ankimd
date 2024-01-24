@@ -48,7 +48,6 @@ class AnkimdDialog(QDialog):
 
     def get_filepath(self):
         self.filepath = QFileDialog.getOpenFileName(self, 'Select markdown file to upload',
-                                directory=str(Path.home()),
                                 filter="*.md")
         self.filepath_label.setText(self.filepath[0])
 

@@ -51,7 +51,7 @@ def parse(path="", delimiter_front="!\\", delimiter_back="!\\\\") -> str:
         if extension != ".md":
             raise FileNotFoundError
 
-        with open(path, "r") as f:
+        with open(path, mode="r", encoding="utf-8") as f:
             for line in f.readlines():
                 if line == "\n":
                     continue

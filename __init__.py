@@ -1,9 +1,11 @@
+import os
 from .main import parse
 from .form import AnkimdDialog
 
 from aqt import mw
 from aqt.utils import showInfo, qconnect
 from aqt.qt import *
+import aqt.importing
 
 # We're going to add a menu item below. First we want to create a function to
 # be called when the menu item is activated.
@@ -15,7 +17,6 @@ def testFunction() -> None:
                                 delimiter_front=mw.ankimd_dialog.delimiter_front_box.text(),
                                 delimiter_back=mw.ankimd_dialog.delimiter_back_box.text())
         mw.handleImport(path=output_filepath)
-
 
 # create a new menu item, "test"
 action = QAction("Import Markdown", mw)
