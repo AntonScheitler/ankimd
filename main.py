@@ -69,7 +69,7 @@ def parse(path="", delimiter_front="!\\", delimiter_back="!\\\\") -> str:
 
         if in_list:
             curr_flashcards += "</ul>"
-        with open(pure_path + ".txt", "w") as f:
+        with open(pure_path + ".txt", mode="w", encoding="utf-8") as f:
             f.write(curr_flashcards)
 
     except FileNotFoundError:
