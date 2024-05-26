@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import *
+from aqt.qt import *
 from pathlib import Path
 import sys
 
@@ -25,7 +25,8 @@ class AnkimdDialog(QDialog):
         self.createForm()
 
         # creating a dialog button for ok and cancel
-        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        self.buttonBox = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok)
+        self.buttonBox.addButton(QDialogButtonBox.StandardButton.Cancel)
 
         # adding action when form is accepted
         self.buttonBox.accepted.connect(self.getInfo)
